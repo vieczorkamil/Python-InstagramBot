@@ -2,6 +2,7 @@ from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 from login import *
 import time
+from datetime import datetime
 
 class Bot():
     def __init__(self, LOGIN, PASSWORD):
@@ -112,21 +113,28 @@ class Bot():
         #update follower list
         lastList = self.getFollowersList()
         unfollowersList = []
-        unfollowerFile = open("UnfollowersList.txt","w")
+        unfollowerFile = open("UnfollowersList.txt","a")
+        unfollowerFile.write(datetime.now().strftime('%Y-%m-%d %H:%M:%S'))
         for unfollower in check:
             if unfollower not in lastList:
                 unfollowersList.append(unfollower)
                 unfollowerFile.write(unfollower)
                 unfollowerFile.write("\n")
+        if not unfollowersList:
+            unfollowerFile.write("No new unfollowers!\n")
         if readFileStatus == True:
             readFile.close()
         unfollowerFile.close()
+
+    def getFollowingList(self):
+        
 
 def main():
     instaBot = Bot(MY_LOGIN, MY_PASSWORD)
     #instaBot.getFollowersList()
     instaBot.getUnfollowers()
     #instaBot.likeComment('fifa21','<3')
+
 if __name__ == '__main__':
     main()
 
