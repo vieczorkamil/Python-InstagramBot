@@ -91,7 +91,7 @@ class Bot():
             time.sleep(0.5) #to ensure page loading
         print("Number of followers : "+followers.text)
         
-        file = open("FollowersList.txt","w")
+        file = open(self.LOGIN+"-FollowersList.txt","w")
         for name in myFollowersList:
             file.write(name)
             file.write("\n")
@@ -103,42 +103,67 @@ class Bot():
         #load last follower list check
         try:
             check = []
-            readFile = open("FollowersList.txt", "r")
+            readFile = open(self.LOGIN+"-FollowersList.txt", "r")
             readFileStatus = True
             for name in readFile:
                 check.append(name.rstrip("\n"))
         except :
             print("Can not load file")
             readFileStatus = False
+        print("Checking new unfollowers")
         #update follower list
         lastList = self.getFollowersList()
         unfollowersList = []
-        unfollowerFile = open("UnfollowersList.txt","a")
+        unfollowerFile = open(self.LOGIN+"-UnfollowersList.txt","a")
         unfollowerFile.write(datetime.now().strftime('%Y-%m-%d %H:%M:%S'))
         for unfollower in check:
             if unfollower not in lastList:
                 unfollowersList.append(unfollower)
                 unfollowerFile.write(unfollower)
                 unfollowerFile.write("\n")
+                print(unfollower)
         if not unfollowersList:
             unfollowerFile.write("No new unfollowers!\n")
+            print("No new unfollowers!")
         if readFileStatus == True:
             readFile.close()
         unfollowerFile.close()
 
     def getFollowingList(self):
+        following = self.driver.find_element_by_class_name('gmFkV')
+        following.click()
+        time.sleep(3)
+        #number of following accounts
+        following = self.driver.find_element_by_xpath('//*[@id="react-root"]/section/main/div/header/section/ul/li[3]/a/span')
+        #show list of following accounts
+        myFollowing = self.driver.find_element_by_xpath('//*[@id="react-root"]/section/main/div/header/section/ul/li[3]/a')
+        myFollowing.click()
+        time.sleep(3)
+        ###
+        myFollowingList = []
+        for i in range (1, int(following.text)+1):
+            myFollowing = self.driver.find_element_by_xpath('/html/body/div[4]/div/div/div[2]/ul/div/li['+str(i)+']')
+            scroll = self.driver.execute_script("arguments[0].scrollIntoView();", myFollowing)
+            myFollowersName = myFollowers.text.partition('\n')[0]
+            print(str(i)+") "+myFollowingName)
+            myFollowingList.append(myFollowingName)
+            time.sleep(0.5) #to ensure page loading
+        print("Number of following accounts : "+following.text)
         
+        file = open(self.LOGIN+"-FollowingList.txt","w")
+        for name in myFollowingList:
+            file.write(name)
+            file.write("\n")
+        file.close()
+
+        return myFollowingList
+
 
 def main():
     instaBot = Bot(MY_LOGIN, MY_PASSWORD)
     #instaBot.getFollowersList()
     instaBot.getUnfollowers()
-    #instaBot.likeComment('fifa21','<3')
+    #instaBot.likeComment('python','<3')
 
 if __name__ == '__main__':
     main()
-
-"""
-to do: 
-    add date to files
-"""
