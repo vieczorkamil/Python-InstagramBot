@@ -99,7 +99,7 @@ class Bot():
 
         return myFollowersList
 
-    def getUnfollowers(self):
+    def Unfollowers(self):
         #load last follower list check
         try:
             check = []
@@ -144,7 +144,7 @@ class Bot():
         for i in range (1, int(following.text)+1):
             myFollowing = self.driver.find_element_by_xpath('/html/body/div[4]/div/div/div[2]/ul/div/li['+str(i)+']')
             scroll = self.driver.execute_script("arguments[0].scrollIntoView();", myFollowing)
-            myFollowersName = myFollowers.text.partition('\n')[0]
+            myFollowingName = myFollowing.text.partition('\n')[0]
             print(str(i)+") "+myFollowingName)
             myFollowingList.append(myFollowingName)
             time.sleep(0.5) #to ensure page loading
@@ -158,12 +158,14 @@ class Bot():
 
         return myFollowingList
 
-
+    def DontFollowBack(self):
+        pass
 def main():
     instaBot = Bot(MY_LOGIN, MY_PASSWORD)
     #instaBot.getFollowersList()
-    instaBot.getUnfollowers()
+    #instaBot.Unfollowers()
     #instaBot.likeComment('python','<3')
+    instaBot.getFollowingList()
 
 if __name__ == '__main__':
     main()
