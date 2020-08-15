@@ -100,7 +100,7 @@ class Bot():
         return myFollowersList
 
     def Unfollowers(self):
-        #load last follower list check
+        #load last follower list
         try:
             check = []
             readFile = open(self.LOGIN+"-FollowersList.txt", "r")
@@ -158,14 +158,62 @@ class Bot():
 
         return myFollowingList
 
-    def DontFollowBack(self):
-        pass
+    def dontFollowBack_Fans(self):
+        #load last follower list
+        try:
+            followers = []
+            readFollowersFile = open(self.LOGIN+"-FollowersList.txt", "r")
+            readFollowersFileStatus = True
+            for name in readFollowersFile:
+                followers.append(name.rstrip("\n"))
+        except :
+            print("Can not load file. Please run getFollowersList first")
+            readFollowersFileStatus = False
+
+        #load last following list
+        try:
+            following = []
+            readFollowingFile = open(self.LOGIN+"-FollowingList.txt", "r")
+            readFollowingFileStatus = True
+            for name in readFollowingFile:
+                following.append(name.rstrip("\n"))
+        except :
+            print("Can not load file. Please run getFollowingList first")
+            readFollowingFileStatus = False
+
+        #create don't follow back and fans list
+        dontFollowFile = open(self.LOGIN+"-DontFollowBack.txt", "w")
+        fansFile = open(self.LOGIN+"-Fans.txt","w")
+        print("\nList of don't follow back account:\n")
+        i=1
+        for name in following:
+            if name not in followers:
+                print(str(i)+") "+name)
+                dontFollowFile.write(name)
+                dontFollowFile.write("\n")
+                i=i+1
+        i=0
+        print("\nList of fans account:\n")
+        for name in followers:
+            if name not in following:
+                print(str(i)+") "+name)
+                fansFile.write(name)
+                fansFile.write("\n")
+                i=i+1
+        dontFollowFile.close()
+        fansFile.close()
+        if readFollowersFileStatus == True:
+            readFollowersFile.close()
+        if readFollowingFileStatus == True:
+            readFollowingFile.close()
+
 def main():
     instaBot = Bot(MY_LOGIN, MY_PASSWORD)
     #instaBot.getFollowersList()
     #instaBot.Unfollowers()
     #instaBot.likeComment('python','<3')
-    instaBot.getFollowingList()
+    #instaBot.getFollowingList()
+    instaBot.dontFollowBack_Fans()
 
 if __name__ == '__main__':
     main()
