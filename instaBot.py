@@ -116,6 +116,7 @@ class Bot():
         unfollowersList = []
         unfollowerFile = open(self.LOGIN+"-UnfollowersList.txt","a")
         unfollowerFile.write(datetime.now().strftime('%Y-%m-%d %H:%M:%S'))
+        unfollowerFile.write("\n")
         for unfollower in check:
             if unfollower not in lastList:
                 unfollowersList.append(unfollower)
@@ -211,9 +212,9 @@ def main():
     instaBot = Bot(MY_LOGIN, MY_PASSWORD)
     #instaBot.getFollowersList()
     #instaBot.Unfollowers()
-    #instaBot.likeComment('python','<3')
+    instaBot.likeComment('python','<3')
     #instaBot.getFollowingList()
-    instaBot.dontFollowBack_Fans()
+    #instaBot.dontFollowBack_Fans()
 
 if __name__ == '__main__':
     main()
