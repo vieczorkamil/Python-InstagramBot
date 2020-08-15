@@ -69,6 +69,10 @@ class Bot():
                 time.sleep(3)
             except:
                 print("Link invalid")
+        #back to start page
+        startPage = self.driver.find_element_by_xpath('//*[@id="react-root"]/section/nav/div[2]/div/div/div[1]/a')
+        startPage.click()
+        time.sleep(2)
         
     def getFollowersList(self):
         followers = self.driver.find_element_by_class_name('gmFkV')
@@ -96,6 +100,12 @@ class Bot():
             file.write(name)
             file.write("\n")
         file.close()
+
+        #back to start page
+        self.driver.back()
+        time.sleep(1)
+        self.back()
+        time.sleep(2)
 
         return myFollowersList
 
@@ -157,6 +167,12 @@ class Bot():
             file.write("\n")
         file.close()
 
+        #back to start page
+        self.driver.back()
+        time.sleep(1)
+        self.back()
+        time.sleep(2)
+
         return myFollowingList
 
     def dontFollowBack_Fans(self):
@@ -212,7 +228,7 @@ def main():
     instaBot = Bot(MY_LOGIN, MY_PASSWORD)
     #instaBot.getFollowersList()
     #instaBot.Unfollowers()
-    instaBot.likeComment('python','<3')
+    instaBot.likeComment('ai','<3')
     #instaBot.getFollowingList()
     #instaBot.dontFollowBack_Fans()
 
