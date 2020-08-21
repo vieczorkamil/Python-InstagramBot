@@ -104,7 +104,7 @@ class Bot():
         #back to start page
         self.driver.back()
         time.sleep(1)
-        self.back()
+        self.driver.back()
         time.sleep(2)
 
         return myFollowersList
@@ -170,7 +170,7 @@ class Bot():
         #back to start page
         self.driver.back()
         time.sleep(1)
-        self.back()
+        self.driver.back()
         time.sleep(2)
 
         return myFollowingList
@@ -227,10 +227,10 @@ class Bot():
 def main():
     instaBot = Bot(MY_LOGIN, MY_PASSWORD)
     #instaBot.getFollowersList()
-    #instaBot.Unfollowers()
-    instaBot.likeComment('ai','<3')
+    instaBot.Unfollowers()
+    #instaBot.likeComment('ai','<3')
     #instaBot.getFollowingList()
-    #instaBot.dontFollowBack_Fans()
+    instaBot.dontFollowBack_Fans()
 
 if __name__ == '__main__':
     main()
