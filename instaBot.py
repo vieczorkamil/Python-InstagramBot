@@ -42,7 +42,7 @@ class Bot():
 
     def __del__(self):
         """ 
-        The deconstructor for Bot class.    
+        The destructor for Bot class.    
         """
         self.driver.close()
         print("Browser closed successful!")
