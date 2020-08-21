@@ -6,6 +6,13 @@ from datetime import datetime
 
 class Bot():
     def __init__(self, LOGIN, PASSWORD):
+        """ 
+        The constructor for Bot class.
+
+        Parameters: 
+           LOGIN (str): Account login. 
+           PASSWORD (str): Account password.    
+        """
         print("Instagram bot is runninig!")
         self.LOGIN = LOGIN
         self.driver = webdriver.Edge()
@@ -34,10 +41,20 @@ class Bot():
         time.sleep(3)
 
     def __del__(self):
+        """ 
+        The deconstructor for Bot class.    
+        """
         self.driver.close()
         print("Browser closed successful!")
 
     def likeComment(self, tag, comment=''):
+        """ 
+        The method to like and comment latest photo sharing by parameterized tag 
+  
+        Parameters: 
+           tag (str): Tag used to find latest photo to like and comment. 
+           comment (str): Content of comments.    
+        """
         search = self.driver.find_element_by_xpath('//*[@id="react-root"]/section/nav/div[2]/div/div/div[2]/input')
         search.send_keys('#' + tag)
         time.sleep(3)
@@ -75,6 +92,9 @@ class Bot():
         time.sleep(2)
         
     def getFollowersList(self):
+        """
+        Returns : List of strings follower accounts name
+        """
         followers = self.driver.find_element_by_class_name('gmFkV')
         followers.click()
         time.sleep(3)
@@ -110,6 +130,9 @@ class Bot():
         return myFollowersList
 
     def Unfollowers(self):
+        """ 
+        The method to create or update text file with list of new unfollowers accounts name
+        """
         #load last follower list
         try:
             check = []
@@ -141,6 +164,9 @@ class Bot():
         unfollowerFile.close()
 
     def getFollowingList(self):
+        """
+        Returns : List of strings following accounts name
+        """
         following = self.driver.find_element_by_class_name('gmFkV')
         following.click()
         time.sleep(3)
@@ -176,6 +202,9 @@ class Bot():
         return myFollowingList
 
     def dontFollowBack_Fans(self):
+        """ 
+        The method to create or update text file with list of don't follow back accounts names and list of fans accouts names
+        """
         #load last follower list
         try:
             followers = []
